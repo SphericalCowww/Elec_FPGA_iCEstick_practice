@@ -1,1 +1,1 @@
-# Elec_FPGS_iCEstick_practice-
+# Learning FPGA Using iCEstick Evaluation Kit
