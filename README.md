@@ -16,6 +16,13 @@ The "assignment" is shown in ''3_basic_logic/_assignment.png'', and the connecti
     apio build --top-module basic_logic
     apio upload --top-module basic_logic
 
+## Project 4:
+Similar operation to that of project 3
+
+## Keywords:
+finite state machine, finite state automata, formal language, parsing, regular expressing, type theory, pumping lemma
+- Computerphile, Computers Without Memory - Computerphile (<a href="https://www.youtube.com/watch?v=vhiiia1_hC4">YouTube</a>)
+
 ## References:
 - DigiKey, Introduction to FPGA (<a href="https://www.youtube.com/watch?v=lLg1AgA2Xoo&list=PLEBQazB0HUyT1WmMONxRZn9NmQ_9CIKhb">YouTube</a>)
 - Lattice iCE40 LP/HX Low-Power, High-Performance FPGA with Small BGA package for the thinnest devices (<a href="https://www.latticesemi.com/iCE40">Website</a>, <a href="https://www.latticesemi.com/view_document?document_id=49383">iCE40 Pinout HX1K</a>, <a href="https://docs.rs-online.com/056e/0900766b814f658c.pdf">DS1040 - iCE40 LP/HX Family Data Sheet - RS Components</a>, <a href="https://www.latticesemi.com/~/media/LatticeSemi/Documents/UserManuals/EI/icestickusermanual.pdf">icestickusermanual</a>)
