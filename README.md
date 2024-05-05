@@ -20,6 +20,8 @@ The "assignment" is shown in ''3_basic_logic/_assignment.png'', and the connecti
 Similar operation to that of project 3
 
 ## Keywords:
+- sensitivity list: list of registers to track with positive or negative edges in an "always" loop
+
 finite state machine, finite state automata, formal language, parsing, regular expressing, type theory, pumping lemma
 - Computerphile, Computers Without Memory - Computerphile (<a href="https://www.youtube.com/watch?v=vhiiia1_hC4">YouTube</a>)
 
