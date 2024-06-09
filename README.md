@@ -16,7 +16,7 @@ The "assignment" is shown in ''3_basic_logic/_assignment.png'', and the connecti
     apio build --top-module basic_logic
     apio upload --top-module basic_logic
 
-## Project 4:
+## Project 4-5:
 Similar operation to that of project 3
 
 ## Keywords:
