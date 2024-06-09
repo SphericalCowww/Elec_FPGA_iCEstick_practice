@@ -1,0 +1,1 @@
+# increment counting by 1 when go is high; remove debouncing. Reset LED to off when reset is high.

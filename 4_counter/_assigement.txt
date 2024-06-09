@@ -1,0 +1,1 @@
+# start counting when enable is high. Reset LED to off when reset is high.

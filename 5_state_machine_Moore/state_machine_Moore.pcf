@@ -1,0 +1,15 @@
+#clock
+set_io  clk         21
+
+#LED
+set_io  led[0]      99
+set_io  led[1]      98
+set_io  led[2]      97
+set_io  led[3]      96
+set_io  doneSig     95
+
+#input
+set_io  rstInput    78
+set_io  goInput     79
+
+
