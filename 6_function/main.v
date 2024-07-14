@@ -1,4 +1,4 @@
-module state_machine_Moore(
+module main(
     input               clk,        //12MHz clock
     input               rstInput,
     input               goInput, 
@@ -11,26 +11,20 @@ module state_machine_Moore(
     assign  rst = rstInput;
     assign  go  = goInput;
 
-    reg [1:0]   state;
     localparam  STATE_IDLE  = 2'd0;
-    localparam  STATE_PROC  = 2'd1;
-    localparam  STATE_DONE  = 2'd2;
+    localparam  STATE_POS   = 2'd1;
+    localparam  STATE_NEG   = 2'd2;
+    localparam  STATE_DONE  = 2'd3;
+    reg [1:0]   state = STATE_IDLE;
 
     reg         clkDiv;
-    reg [19:0]  clkIter;
-    localparam  CLK_DIV_MAX = 20'd600000 - 1;   //0.1Hz, factor of 2 from "clkDiv <= ~clkDiv"
 //////////////////////////////////////////////////////////////////////////////////////////////
 //clock handling
-    always @ (posedge rst or posedge clk) begin
-        if (rst == 1'b1) begin
-            clkIter <= 20'b0;
-        end else if (clkIter == CLK_DIV_MAX) begin
-            clkIter <= 20'b0;
-            clkDiv  <= ~clkDiv;
-        end else begin 
-            clkIter <= clkIter + 1'b1;
-        end
-    end
+    clock_divider #(.CLK_ITER_WIDTH(24), .CLK_ITER_MAX(1200000 - 1)) clk_div_obj1(
+        .clk(clk),
+        .rst(rst),
+        .out_clk_div(clkDiv)
+    );
 //state handling
     always @ (posedge rst or posedge clkDiv) begin
         if (rst == 1'b1) begin
@@ -39,10 +33,31 @@ module state_machine_Moore(
             case(state)
                 STATE_IDLE: begin
                     if (go == 1'b1) begin
-                        state <= STATE_PROC;
+                        state <= STATE_POS;
                     end
                 end                
-                STATE_PROC: state <= STATE_DONE;
+                STATE_POS: begin
+                    if (go == 1'b1) begin
+                        if (led < (4'b1111 - 1)) begin
+                            state <= STATE_POS;
+                        end else begin
+                            state <= STATE_NEG;
+                        end
+                    end else begin
+                        state <= STATE_DONE;
+                    end
+                end
+                STATE_NEG: begin
+                    if (go == 1'b1) begin
+                        if (4'b0001 < led) begin
+                            state <= STATE_NEG;
+                        end else begin
+                            state <= STATE_POS;
+                        end
+                    end else begin
+                        state <= STATE_DONE;
+                    end 
+                end 
                 STATE_DONE: begin
                     if (go == 1'b0) begin
                         state <= STATE_IDLE;
@@ -59,8 +74,10 @@ module state_machine_Moore(
         // enough time to catch the following before state goes to STATE_DONE?
         // note that mixing led with blocking/unblocking will create problem when combining
         //rst/go input  
-        end else if (state == STATE_PROC) begin
+        end else if (state == STATE_POS) begin
             led <= led + 1'b1; 
+        end else if (state == STATE_NEG) begin
+            led <= led - 1'b1;
         end 
     end
     always @ ( * ) begin

@@ -17,7 +17,7 @@ module state_machine_Mealy(
 
     reg         clkDiv;
     reg [19:0]  clkIter;
-    localparam  CLK_DIV_MAX = 20'd600000;   //0.1Hz, factor of 2 from "clkDiv <= ~clkDiv"
+    localparam  CLK_DIV_MAX = 20'd600000 - 1;   //0.1Hz, factor of 2 from "clkDiv <= ~clkDiv"
 //////////////////////////////////////////////////////////////////////////////////////////////
 //clock handling
     always @ (posedge rst or posedge clk) begin

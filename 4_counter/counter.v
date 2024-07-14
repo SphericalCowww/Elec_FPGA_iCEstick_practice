@@ -10,7 +10,7 @@ module counter (
 
     reg clk_div;
     reg [23:0] clk_iter;
-    localparam CLK_DIV_MAX = 24'd6000000;               //1Hz, factor of 2 from "clk_div <= ~clk_div"
+    localparam CLK_DIV_MAX = 24'd6000000 - 1;               //1Hz, factor of 2 from "clk_div <= ~clk_div"
 
     always @ (posedge reset or posedge clk) begin
         if (reset == 1'b1) begin
