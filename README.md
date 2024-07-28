@@ -1,5 +1,5 @@
-# Learning FPGA Using iCEstick Evaluation Kit
-## Common apio codes:
+# Learning FPGA Using iCEstick Evaluation Kit with Apio
+## Common Apio codes:
 
     apio system --lsftdi
     apio boards --list
@@ -16,10 +16,41 @@ The "assignment" is shown in ''3_basic_logic/_assignment.png'', and the connecti
     apio build --top-module basic_logic
     apio upload --top-module basic_logic
 
-## Project 4-5:
+## Project 4-6:
 Similar operation to that of project 3
 
+## Project 7:
+The "assignment" is shown in ''7_sim_debounce/_assignment.png'', then run:
+
+    cd 7_sim_debounce
+    apio init -b icestick
+    apio verify  
+    apio sim
+
+Because of the problem installing `gtkwave` on M1 MacOS, installed it on a Windows 11 PC instead and run:
+
+    gtkwave main_tb.vcd
+
+The result from the gtkwave GUI is shown by the screenshots: `7_sim_debounce/_sim_fullRange.png` showing the full simulation run when the `go` input is invoked every 10us in the simulation, and `7_sim_debounce/_sim_go_debouncingHandling` showing by the red vertical line where the simulated debouncing occurs.
+
+<img src="https://github.com/SphericalCowww/Elec_FPGA_iCEstick_practice/blob/main/7_sim_debounce/_sim_fullRange.png">
+
+<img src="https://github.com/SphericalCowww/Elec_FPGA_iCEstick_practice/blob/main/7_sim_debounce/_sim_go_debouncingHandling.png">
+
 ## Keywords:
+- Verilog elements:
+
+| Name | Description (local understanding) |
+| - | - |
+| input | define device input port |
+| output | define device output port |
+| wire | define a link variable (like physical wire) to a device IO port |
+| assign | give link  to a wire |
+| reg | define a variable |
+| localparam | define variable with a fixed value |
+| parameter | define variable of a function |
+| defparam | give value to a parameter for a function |
+
 - sensitivity list: list of registers to track with positive or negative edges in an "always" loop
 
 finite state machine, finite state automata, formal language, parsing, regular expressing, type theory, pumping lemma
