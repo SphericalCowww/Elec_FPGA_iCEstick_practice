@@ -1,4 +1,7 @@
-module state_machine_Moore(
+module state_machine_Moore #(
+    parameter CLK_ITER_WIDTH = 20,
+    parameter CLK_ITER_MAX   = 600000 - 1   //0.1Hz, factor of 2 from "clk_div <= ~clk_div"
+)(
     input               clk,        //12MHz clock
     input               rstInput,
     input               goInput, 
@@ -12,27 +15,27 @@ module state_machine_Moore(
     assign  go  = goInput;
 
     reg [1:0]   state;
-    localparam  STATE_IDLE  = 2'd0;
-    localparam  STATE_PROC  = 2'd1;
-    localparam  STATE_DONE  = 2'd2;
+    localparam  STATE_IDLE = 2'd0;
+    localparam  STATE_PROC = 2'd1;
+    localparam  STATE_DONE = 2'd2;
 
-    reg         clkDiv;
-    reg [19:0]  clkIter;
-    localparam  CLK_DIV_MAX = 20'd600000 - 1;   //0.1Hz, factor of 2 from "clkDiv <= ~clkDiv"
+    reg                     clk_div;
+    reg [CLK_ITER_WIDTH:0]  clk_iter;
 //////////////////////////////////////////////////////////////////////////////////////////////
 //clock handling
     always @ (posedge rst or posedge clk) begin
         if (rst == 1'b1) begin
-            clkIter <= 20'b0;
-        end else if (clkIter == CLK_DIV_MAX) begin
-            clkIter <= 20'b0;
-            clkDiv  <= ~clkDiv;
+            clk_iter <= 20'b0;
+            clk_div  <= 0;
+        end else if (clk_iter == CLK_ITER_MAX) begin
+            clk_iter <= 20'b0;
+            clk_div  <= ~clk_div;
         end else begin 
-            clkIter <= clkIter + 1'b1;
+            clk_iter <= clk_iter + 1'b1;
         end
     end
-//state handling, wait for clkDiv to do a process a step to avoid debouncing
-    always @ (posedge rst or posedge clkDiv) begin
+//state handling
+    always @ (posedge rst or posedge clk_div) begin
         if (rst == 1'b1) begin
             state <= STATE_IDLE;
         end else begin
@@ -53,7 +56,7 @@ module state_machine_Moore(
         end 
     end
 //LED handling
-    always @ (posedge rst or posedge clkDiv) begin
+    always @ (posedge rst or posedge clk_div) begin
         if (rst == 1'b1) begin
             led <= 4'b0;
         // enough time to catch the following before state goes to STATE_DONE?
