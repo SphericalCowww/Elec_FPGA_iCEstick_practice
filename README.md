@@ -37,16 +37,29 @@ The result from the gtkwave GUI is shown by the screenshots: `7_sim_debounce/_si
 
 <img src="https://github.com/SphericalCowww/Elec_FPGA_iCEstick_practice/blob/main/7_sim_debounce/_sim_go_debouncingHandling.png">
 
+## Project 8:
+The "assignment" is shown in ''8_block_RAM/_assignment.png''. To do an initial RAM test do:
+
+    cd 8_block_RAM
+    apio init -b icestick
+    apio verify 
+    apio build -v --top-module blockRAMtester
+    apio sim --testbench blockRAMtester_tb.v
+
+Note that ''blockRAMtester.pcf'' is just a place holder to run ''apio build -v''. ''Crtl-f'' with ''Device utilisation'' to find the memory usage.
+
 ## Keywords:
 - Verilog elements:
 
 | Name | Description (local understanding) |
 | - | - |
-| input | define device input port |
-| output | define device output port |
-| wire | define a link variable (like physical wire) to a device IO port |
+| wire | define a link variable (like physical wire) to a device IO port. Note that for an output wire of a function (module), linking it with a wire will result in ''output of a function: cannot be driven by primitives or continuous assignment''. In this case, use reg instead. |
 | assign | give link  to a wire |
-| reg | define a variable |
+| reg | define a variable (register) |
+| input | define device input wire |
+| output | define device output wire |
+| input reg | define input reg for a function (module) |
+| output reg | define output reg for a function (module) |
 | localparam | define variable with a fixed value |
 | parameter | define variable of a function |
 | defparam | give value to a parameter for a function |
