@@ -40,10 +40,10 @@ The result from the gtkwave GUI is shown by the screenshots: `7_sim_debounce/_si
 ## Project 8:
 The "assignment" is shown in ''8_block_RAM/_assignment.png''. To do an initial RAM test do:
 
-    cd 8_block_RAM
+    cd 8_block_RAM_simple_read
     apio init -b icestick
     apio verify 
-    apio build -v --top-module blockRAMtester
+    apio build -v --top-module _block_16x4_RAM
     apio sim --testbench blockRAMtester_tb.v
 
 Note that ''blockRAMtester.pcf'' is just a place holder to run ''apio build -v''. ''Crtl-f'' with ''Device utilisation'' to find the memory usage.
