@@ -43,7 +43,7 @@ The "assignment" is shown in ''8_block_RAM/_assignment.png''. To do an initial R
     cd 8_block_RAM
     apio init -b icestick
     apio verify 
-    apio build -v --top-module blockRAMtester
+    apio build -v --top-module _blockRAM
     apio sim --testbench blockRAMtester_tb.v
 
 Note that ''blockRAMtester.pcf'' is just a place holder to run ''apio build -v''. ''Crtl-f'' with ''Device utilisation'' to find the memory usage.
