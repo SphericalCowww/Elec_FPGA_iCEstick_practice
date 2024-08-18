@@ -20,8 +20,7 @@ module blockRAMtester_tb();
         clk = ~clk;
     end
 
-    // 
-    blockRAMtester #(.INIT_FILE("blockRAMtester.txt")) uut (
+    _block_16x4_RAM #(.INIT_FILE("blockRAMtester.txt")) uut (
         .clk(clk),
         .w_en(w_en),
         .r_en(r_en),
@@ -54,7 +53,7 @@ module blockRAMtester_tb();
         end
     end
 
-    // pressing go periodically
+    // pressing bottom periodically
     always begin
         #5000            //lasting 1000*1ns = 1.0us 
         w_addr = 12;

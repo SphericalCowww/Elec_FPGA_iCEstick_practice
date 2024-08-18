@@ -1,0 +1,23 @@
+#clock
+set_io  clk         21
+
+#ports
+set_io  w_en        44
+set_io  r_en        45
+
+set_io  w_addr[0]   78
+set_io  w_addr[1]   79
+set_io  w_addr[2]   80
+set_io  w_addr[3]   81
+
+set_io  r_addr[0]   87
+set_io  r_addr[1]   88
+set_io  r_addr[2]   90
+set_io  r_addr[3]   91
+
+set_io  w_data[0]   112
+set_io  w_data[1]   113
+
+set_io  r_data[0]   116
+set_io  r_data[1]   117
+

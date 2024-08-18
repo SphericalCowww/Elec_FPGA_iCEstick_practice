@@ -1,2 +1,2 @@
-# press set to be in the write mode, release to store a 2bit value, iter to the next address with the next press
-# when set is not pressed, show these 2 bit values sequentially following the address
+# press set to be in the write mode, release to store a 2-bit value, iter to the next address with the next press
+# when set is not pressed, show these 2-bit values sequentially following the address
