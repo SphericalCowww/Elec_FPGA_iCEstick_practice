@@ -1,129 +1,47 @@
-`timescale 1 ns / 10 ps              // set simulated unit / precision
-
 module main(
-    input            clk,        //12MHz clock
-    input            rstInput,
-    input            goInput, 
-    output reg [1:0] led,
-    output reg [1:0] stateO,
-    output reg       doneSig
+    input clk,        //12MHz clock
 );
-    wire    rst;
-    wire    iterLED;
-    assign  rst     = rstInput;
-    assign  iterLED = goInput;
-
-    wire clkDiv;
-    localparam STATE_IDLE = 2'd0;
-    localparam STATE_ITER = 2'd1;
-    localparam STATE_READ = 2'd2;
-    localparam STATE_DONE = 2'd3;
-    reg [1:0]  state      = STATE_DONE;
-
-    reg w_en = 0;
-    reg r_en = 0;
-    reg  [3:0] w_addr;
-    reg  [3:0] r_addr;
-    reg  [7:0] w_data;
-    wire [7:0] r_data;
- 
+    reg w_en = 1;
+    reg r_en = 1;
+    reg c_en = 1;
+    reg  [7:0] w_addr;
+    reg  [7:0] r_addr;
+    reg  [15:0] w_data;
+    reg  [15:0] mask;
+    wire [15:0] r_data;
     ///////////////////////////////////////////////////////////////////////////////////////////////////
-    //clock handling
-    _clock_divider #(.CLK_ITER_WIDTH(24), .CLK_ITER_MAX(1200000 - 1)) clk_div_obj(    
-        .clk(clk),
-        .rst(rst),
-        .out_clk_div(clkDiv)
-    );
-    //RAM IO
-    _block_RAM #(.INIT_FILE("_block_RAM_init.txt")) _block_RAM_obj (
-        .clk(clk),
-        .w_en(w_en),
-        .r_en(r_en),
-        .w_addr(w_addr),
-        .r_addr(r_addr),
-        .w_data(w_data),
-        .r_data(r_data)
-    );
-    //state handling
-    always @ (posedge rst or posedge clkDiv) begin
-        if (rst == 1'b1) begin
-            state <= STATE_IDLE;
-        end else begin
-            case(state)
-                STATE_IDLE: begin
-                    if (iterLED == 1'b1) begin
-                        state <= STATE_ITER;
-                    end
-                end                
-                STATE_ITER: begin
-                    if (iterLED == 1'b1) begin
-                        state <= STATE_READ;
-                    end else begin
-                        state <= STATE_DONE;
-                    end
-                end
-                STATE_READ: begin
-                    if (iterLED == 1'b1) begin
-                        state <= STATE_ITER;
-                    end else begin
-                        state <= STATE_DONE;
-                    end
-                end
-                STATE_DONE: begin
-                    if (iterLED == 1'b0) begin
-                        state <= STATE_IDLE;
-                    end
-                end
-                default: state <= STATE_IDLE;
-            endcase
-        end 
-    end
-    //LED handling
-    always @ (posedge rst or posedge clkDiv) begin
-        if (rst == 1'b1) begin
-            led <= 2'b0;
-        end else if (state == STATE_ITER) begin
-            r_en <= 1'b1;
-            r_addr <= r_addr + 4'b1;
-        end else if (state == STATE_READ) begin
-            led[0] <= r_data[0];
-            led[1] <= r_data[1];
-        end
-    end
-    always @ ( * ) begin
-        if (state == STATE_DONE) begin
-            r_en    = 1'b0;                     //blocking assignment
-            doneSig = 1'b1;                     //blocking assignment
-        end else begin
-            doneSig = 1'b0;                     //blocking assignment
-        end
-    end
-    ///////////////////////////////////////////////////////////////////////////////////////////////////
-    // for debugging
+    // the following is using the inference method, can't be synthesized => ICESTORM_RAM:  0/16  0%
     /*
-    _clock_divider #(.CLK_ITER_WIDTH(24), .CLK_ITER_MAX(6000000 - 1)) clk_div_obj_debugger(
-        .clk(clk),
-        .rst(rst),
-        .out_clk_div(doneSig)
-    ); 
-    always @ (posedge rst or posedge clkDiv) begin
-        if (rst == 1'b1) begin
-            w_data <= 2'b0;
-        end else if (state == STATE_ITER) begin
-            w_en   <= 1'b1;
-            w_addr <= w_addr + 4'b1;
-        end else if (state == STATE_READ) begin
-            w_data <= 2'b1;
+    reg [7:0] mem[0:15];
+
+    always @ (posedge clk) begin
+        if (w_en == 1'b1) begin
+            mem[w_addr] <= w_data;
+        end
+        if (r_en == 1'b1) begin
+            r_data <= mem[r_addr];
         end
     end
     */
-    always @ (posedge rst or posedge clkDiv) begin
-        if (rst == 1'b1) begin
-            stateO <= 2'b0;
-        end else begin
-            stateO <= state;
-        end
-    end
+
+    // the following is using the instantiate method, also can't be synthesized
+    // https://www.reddit.com/r/yosys/comments/fyxubo/synthesizing_ice40_512x8_block_ram/
+    SB_RAM40_4K #(
+        .READ_MODE(1),
+        .WRITE_MODE(1)
+    ) mem (
+        .RDATA(r_data),
+        .RADDR(r_addr),
+        .RCLK(clk),
+        .RCLKE(c_en),
+        .RE(r_en),
+        .WADDR(w_addr),
+        .WCLK(clk),
+        .WCLKE(c_en),
+        .WDATA(w_data),
+        .WE(c_en),
+        .MASK(mask)
+    ); 
 endmodule
 
 

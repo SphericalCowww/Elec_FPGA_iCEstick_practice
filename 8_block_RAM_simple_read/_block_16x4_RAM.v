@@ -6,10 +6,10 @@ module _block_16x4_RAM #(
     input               r_en,
     input       [3:0]   w_addr,     //4 bits
     input       [3:0]   r_addr,
-    input       [1:0]   w_data,     //2 bits
-    output  reg [1:0]   r_data
+    input       [7:0]   w_data,     //2 bits
+    output  reg [7:0]   r_data
 );
-    reg     [1:0]   mem[0:15];      //2^(3+1) = 15+1
+    reg     [7:0]   mem[0:15];      //2^(3+1) = 15+1
 //////////////////////////////////////////////////////////////////////////////////////////////
     // memory bus system
     always @ (posedge clk) begin

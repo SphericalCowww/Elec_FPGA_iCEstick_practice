@@ -1,13 +1,15 @@
 module _block_RAM #(
     parameter   INIT_FILE = ""
 )(
-    input            clk,        //12MHz clock
-    input            w_en,
-    input            r_en,
-    input      [3:0] w_addr,     //4 bits
-    input      [3:0] r_addr,
-    input      [7:0] w_data,     //8 bits need at list this much to invoke RAM
-    output reg [7:0] r_data
+    input             clk,        //12MHz clock
+    input             w_en,
+    input             r_en,
+    input      [3:0]  w_addr,     //4 bits
+    input      [3:0]  r_addr,
+    input      [7:0]  w_data,     //8 bits need at list this much to invoke RAM
+//    input      [15:0] mask,
+    output reg [7:0]  r_data
+
 );
     reg [7:0] mem[0:15];      //2^(3+1) = 15+1
 //////////////////////////////////////////////////////////////////////////////////////////////
