@@ -1,0 +1,14 @@
+#clock
+set_io  ref_clk     21
+#output
+set_io  pmod[0]     91
+set_io  pmod[1]     90
+set_io  pmod[2]     88
+set_io  pmod[3]     87
+set_io  pmod[4]     81
+set_io  pmod[5]     80
+set_io  pmod[6]     79
+set_io  pmod[7]     78
+
+#LED
+set_io  led         95
