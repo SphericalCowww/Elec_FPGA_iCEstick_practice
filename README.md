@@ -50,6 +50,30 @@ Note that ''blockRAMtester.pcf'' is just a placeholder to run ''apio build -v''.
 
 Giving up on project 8, since the memory block cannot be invoked even in the most basic case, see <a href="https://www.reddit.com/r/FPGA/comments/1evg8ix/problem_invoking_block_ram/">Reddit</a>. 
 
+## Project 9-10:
+The assignments are not done, however, implemented the improved ''_clock_divider.v'' and ''_debouncer.v'' against glitch. Also a phase-locked loop on ''_clock_divider.v'' is implemented so that the base clock is at 120MHz instead of 12MHz directly from the device. The project simply drives a 0.1Hz LED on the device.
+
+    cd 9_10_phase_lock_loop
+    apio init -b icestick
+    apio raw "icepll -i 12 -o 120"
+    apio verify 
+    apio build -v
+    apio upload
+
+The command apio raw "icepll -i 12 -o 120" is used to obtain the instantiation info for the phase-locked loop (see also <a href="https://www.youtube.com/watch?v=QkoGsd0QvBs">YouTube</a> for implementation). Note that the ''apio build -v'' indicated that the phase-locked loop is enabled with the following output:
+
+    Info: Device utilisation:
+    Info: 	         ICESTORM_LC:    84/ 1280     6%
+    Info: 	        ICESTORM_RAM:     0/   16     0%
+    Info: 	               SB_IO:     3/  112     2%
+    Info: 	               SB_GB:     3/    8    37%
+    Info: 	        ICESTORM_PLL:     1/    1   100%
+    Info: 	         SB_WARMBOOT:     0/    1     0%
+
+## Project 11-12:
+
+Not done. Its implementation of RISC-V processor seems like it defeats the purpose of FPGA? (see <a href="https://www.youtube.com/watch?v=7Elgs5HzIbE">Youtube</a>)
+
 ## Keywords:
 - Verilog elements:
 
@@ -78,3 +102,4 @@ finite state machine, finite state automata, formal language, parsing, regular e
 - Lattice iCE40 LP/HX Low-Power, High-Performance FPGA with Small BGA package for the thinnest devices (<a href="https://www.latticesemi.com/iCE40">Website</a>, <a href="https://www.latticesemi.com/view_document?document_id=49383">iCE40 Pinout HX1K</a>, <a href="https://docs.rs-online.com/056e/0900766b814f658c.pdf">DS1040 - iCE40 LP/HX Family Data Sheet - RS Components</a>, <a href="https://www.latticesemi.com/~/media/LatticeSemi/Documents/UserManuals/EI/icestickusermanual.pdf">icestickusermanual</a>)
 - Imperial College London, Verilog cheatsheet (<a href="http://www.ee.ic.ac.uk/pcheung/teaching/ee2_digital/Verilog%20Quick%20Reference%20Card%20v2_0.pdf">pdf</a>)
 - When to use and not use FPGA (<a href="https://www.youtube.com/watch?v=7Elgs5HzIbE">Youtube</a>, <a href="https://www.eejournal.com/article/11-reasons-you-should-not-use-an-fpga-for-a-design-and-four-reasons-you-should/">Article</a>, <a href="https://news.ycombinator.com/item?id=15391163">Hacker News</a>)
+- FPGA DEV: A brief look at the iCE40 Phase Locked Loop: Multiplying a 3.58 MHz clock up to 42.96 MHz! (<a href="https://www.youtube.com/watch?v=QkoGsd0QvBs">YouTube</a>)
