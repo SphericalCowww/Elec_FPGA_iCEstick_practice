@@ -70,6 +70,28 @@ The command apio raw "icepll -i 12 -o 120" is used to obtain the instantiation i
     Info: 	        ICESTORM_PLL:     1/    1   100%
     Info: 	         SB_WARMBOOT:     0/    1     0%
 
+## Project 9-10 Attempted Arbitrary Waveform Generator:
+Connect the circuit just like in <a href="https://github.com/SphericalCowww/Elec_RaspPiPico_WaveformGen_practice">github link</a> in the following photo:
+
+<img src="https://github.com/SphericalCowww/Elec_FPGA_iCEstick_practice/blob/main/9_10_arbitrary_waveform_generator/_connection.png" width="500">
+
+    cd 9_10_arbitrary_waveform_generator
+    apio init -b icestick
+    apio verify 
+    apio build --top-module main_test
+    apio upload --top-module main_test
+    apio sim
+
+Where ''PERIOD_RES/120MHz'' is the resolution period of how fine the generate function look, and ''PERIOD_FUNC/120MHz'' is the function period. Setting ''PERIOD_FUNC = 120'' gives a frequency of 1MHz, and the corresponding square wave is shown in the following photo:
+
+<img src="https://github.com/SphericalCowww/Elec_FPGA_iCEstick_practice/blob/main/9_10_arbitrary_waveform_generator/_waveform_1MHz.png" width="500">
+
+If we further set ''PERIOD_FUNC = 12'' making the frequency 10MHz, the corresponding square wave is shown in the following photo, which is likely distorted because the OP amp used does not have sufficient timing response:
+
+<img src="https://github.com/SphericalCowww/Elec_FPGA_iCEstick_practice/blob/main/9_10_arbitrary_waveform_generator/_waveform_10MHz.png" width="500">
+
+Moreover, in the verilog code, the ''func_iter'' is a ''reg'' type that needs to invoke flip-flops and the output ''pmod'' is a wire type. The synthesis (see <a href="https://www.reddit.com/r/FPGA/comments/13umtpy/difference_bw_synthesis_and_implementation/">Reddit</a>) between these two variables is deemed difficult, especially when system functions such as ''$sin'' is involved. In other word, FPGA waveform generator is limited in how arbitrary the functions is allowed.
+
 ## Project 11-12:
 
 Not done. Its implementation of RISC-V processor seems like it defeats the purpose of FPGA? (see <a href="https://www.youtube.com/watch?v=7Elgs5HzIbE">Youtube</a>)
