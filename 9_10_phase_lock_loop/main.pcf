@@ -1,0 +1,7 @@
+#clock
+set_io  ref_clk     21
+#input
+set_io  rstI        78
+#set_io  enI         79
+#LED
+set_io  led         98
