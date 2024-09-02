@@ -28,8 +28,8 @@ module main_test(
     //assign pmod = func_iter;
     //assign pmod = 128*(func_iter/FUNC_ITER_MAX));
     //assign pmod = 8'd128 + $rtoi(80*($sin(func_iter*2*PI/FUNC_ITER_MAX)));
-    assign pmod = (func_iter < FUNC_ITER_MAX/2) ? 8'b00000000 : 8'd10000000;
-
+    assign pmod = (func_iter < FUNC_ITER_MAX/2) ? 8'b10000000 : 8'd00000000;
+    //assign pmod = (0 < func_iter) ? (8'b10000000*(func_iter/FUNC_ITER_MAX)) : 8'd00000000;
 //////////////////////////////////////////////////////
 
 
