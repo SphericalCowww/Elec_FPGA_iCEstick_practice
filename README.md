@@ -90,7 +90,7 @@ If we further set ''PERIOD_FUNC = 12'' making the frequency 10MHz, the correspon
 
 <img src="https://github.com/SphericalCowww/Elec_FPGA_iCEstick_practice/blob/main/9_10_arbitrary_waveform_generator/_waveform_10MHz.png" width="500">
 
-Moreover, in the verilog code, the ''func_iter'' is a ''reg'' type that needs to invoke flip-flops and the output ''pmod'' is a wire type. The synthesis (see <a href="https://www.reddit.com/r/FPGA/comments/13umtpy/difference_bw_synthesis_and_implementation/">Reddit</a>) between these two variables is deemed difficult, especially when system functions such as ''$sin'' is involved. In other word, FPGA waveform generator is limited in how arbitrary the functions is allowed.
+Moreover, in the verilog code, the ''func_iter'' is a ''reg'' type that needs to invoke flip-flops and the output ''pmod'' is a wire type. The synthesis (see <a href="https://www.reddit.com/r/FPGA/comments/13umtpy/difference_bw_synthesis_and_implementation/">Reddit</a>) between these two variables is deemed difficult, especially when the system functions such as ''$sin'' is involved (see <a href="https://www.reddit.com/r/FPGA/comments/1cqfapk/how_to_work_around_non_constant_realvalued/">Reddit</a>). In other words, FPGA waveform generator is limited in how arbitrary the functions are allowed.
 
 ## Project 11-12:
 
