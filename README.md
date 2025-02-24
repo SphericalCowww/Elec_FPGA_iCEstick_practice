@@ -114,7 +114,7 @@ Not done. Its implementation of RISC-V processor seems like it defeats the purpo
 
 - sensitivity list: list of registers to track with positive or negative edges in an "always" loop
 
-finite state machine, finite state automata, formal language, parsing, regular expressing, type theory, pumping lemma
+- finite state machine, finite state automata, formal language, parsing, regular expressing, type theory, pumping lemma
 - Computerphile, Computers Without Memory - Computerphile (<a href="https://www.youtube.com/watch?v=vhiiia1_hC4">YouTube</a>)
 
 - See this <a href="https://www.reddit.com/r/FPGA/comments/13umtpy/difference_bw_synthesis_and_implementation/">Reddit</a> for the discussion on what synthesis means and this <a href="https://www.reddit.com/r/yosys/comments/fyxubo/synthesizing_ice40_512x8_block_ram/">Reddit</a> on how to "instantiate" block RAM (to invoke firmware directly) as opposed to "infer" block RAM (interpreted by Verilog and compiled to code that invoke the firmware).
